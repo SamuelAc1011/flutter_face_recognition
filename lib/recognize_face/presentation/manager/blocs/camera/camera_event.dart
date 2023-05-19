@@ -4,7 +4,7 @@ abstract class CameraEvent extends Equatable {
   const CameraEvent();
 }
 
-class TakePhoto extends CameraEvent {
+class TakePicture extends CameraEvent {
   @override
   List<Object> get props => [];
 }

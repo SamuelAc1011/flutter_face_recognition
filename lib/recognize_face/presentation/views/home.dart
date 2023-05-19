@@ -1,9 +1,13 @@
 // Flutter
-import 'package:camera/camera.dart';
-import 'package:face_recognition/recognize_face/presentation/manager/blocs/camera/camera_bloc.dart';
-import 'package:face_recognition/recognize_face/presentation/views/views.dart';
 import 'package:flutter/material.dart';
+
+// Packages
+import 'package:camera/camera.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
+// Imports
+import 'package:face_recognition/recognize_face/presentation/manager/blocs/camera/camera_bloc.dart';
+import 'package:face_recognition/recognize_face/presentation/widgets/widgets.dart';
 
 class HomeScreen extends StatelessWidget {
   // Constructor
@@ -11,18 +15,22 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final cameraBloc = BlocProvider.of<CameraBloc>(context);
+    // Variable
+    final cameraBloc = context.read<CameraBloc>();
 
     return Scaffold(
-      appBar: AppBar(title: Text('Take a Picture')),
+      appBar: AppBar(title: const Text('Take a Picture')),
       body: BlocBuilder<CameraBloc, CameraState>(
         builder: (context, state) {
           return FutureBuilder<void>(
             future: cameraBloc.initializeControllerFuture,
             builder: (context, snapshot) {
+              // Condition: Is the Future complete?
               if (snapshot.connectionState == ConnectionState.done) {
+                // * Yes => Display the preview
                 return CameraPreview(cameraBloc.controller!);
               } else {
+                // * No => Display a loading indicator until the controller is initialized
                 return const Center(child: CircularProgressIndicator());
               }
             },
@@ -30,24 +38,7 @@ class HomeScreen extends StatelessWidget {
         },
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-      floatingActionButton: FloatingActionButton(
-        onPressed: () async {
-          final cameraBloc = BlocProvider.of<CameraBloc>(context);
-          await cameraBloc.initializeControllerFuture;
-          final image = await cameraBloc.controller!.takePicture();
-
-          await Navigator.of(context).push(
-            MaterialPageRoute(
-              builder: (context) => PhotoPreviewScreen(
-                imagePath: image.path,
-              ),
-            ),
-          );
-        },
-        child: const Icon(Icons.camera),
-      ),
+      floatingActionButton: const PhotoButton(),
     );
   }
 }
-
-

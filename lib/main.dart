@@ -43,7 +43,7 @@ class MyApp extends StatelessWidget {
         colorSchemeSeed: Colors.purple,
       ),
       routes: {
-        'main_screen': (_) => HomeScreen(),
+        'main_screen': (_) => const HomeScreen(),
       },
     );
   }

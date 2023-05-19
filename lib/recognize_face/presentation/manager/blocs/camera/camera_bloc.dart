@@ -11,24 +11,33 @@ class CameraBloc extends Bloc<CameraEvent, CameraState> {
   CameraController? controller;
   Future<void>? initializeControllerFuture;
 
-  CameraBloc() : super(CameraState()) {
+  CameraBloc() : super(const CameraState()) {
+    // Action: Initialize Camera when the bloc is created
     initializeCamera();
 
-    on<CameraEvent>((event, emit) {
-      // TODO: implement event handler
+    // Event: Take a photo
+    on<TakePicture>((event, emit) async {
+      try {
+        await initializeControllerFuture;
+        final image = await controller!.takePicture();
+        emit(state.copyWith(imagePath: image.path, status: Status.loaded));
+      } catch (e) {
+        emit(state.copyWith(status: Status.failure));
+      }
     });
   }
 
-  // Method: Initialize Camera
+  // Method: Initialize Camera Controller
   Future<void> initializeCamera() async {
     final cameras = await availableCameras();
     final frontCamera = cameras.firstWhere(
-      (camera) => camera.lensDirection == CameraLensDirection.front,
+          (camera) => camera.lensDirection == CameraLensDirection.front,
     );
 
     controller = CameraController(
       frontCamera,
       ResolutionPreset.high,
+      enableAudio: false,
     );
     initializeControllerFuture = controller!.initialize();
   }

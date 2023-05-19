@@ -1,26 +1,29 @@
 part of 'camera_bloc.dart';
 
+enum Status { initial, loaded, failure }
+
 class CameraState extends Equatable {
   // // Constructor
-  const CameraState(
-  //   this.controller,
-  //   this.initializeControllerFuture,
-  );
-  //
-  // // Attributes
-  // final CameraController controller;
-  // final Future<void> initializeControllerFuture;
-  //
+  const CameraState({
+    this.status = Status.initial,
+    this.imagePath = '',
+  });
+
+  // Attributes
+  final Status status;
+  final String imagePath;
+
   @override
-  List<Object?> get props => throw UnimplementedError();
-  //
-  // // Method: CopyWith
-  // CameraState copyWith({
-  //   CameraController? controller,
-  //   Future<void>? initializeControllerFuture,
-  // }) =>
-  //     CameraState(
-  //       controller ?? this.controller,
-  //       initializeControllerFuture ?? this.initializeControllerFuture,
-  //     );
+  // Method:
+  List<Object?> get props => [status, imagePath];
+
+  // Method: CopyWith
+  CameraState copyWith({
+    Status? status,
+    String? imagePath,
+  }) =>
+      CameraState(
+        status: status ?? this.status,
+        imagePath: imagePath ?? this.imagePath,
+      );
 }
