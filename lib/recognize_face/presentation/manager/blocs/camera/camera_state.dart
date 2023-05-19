@@ -1,6 +1,6 @@
 part of 'camera_bloc.dart';
 
-enum Status { initial, loaded, failure }
+enum Status { initial, loaded, takingPhoto, failure }
 
 class CameraState extends Equatable {
   // // Constructor

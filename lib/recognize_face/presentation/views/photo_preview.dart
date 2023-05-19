@@ -1,7 +1,13 @@
-import 'dart:io';
-import 'package:face_recognition/recognize_face/presentation/manager/blocs/camera/camera_bloc.dart';
+// Flutter
 import 'package:flutter/material.dart';
+
+// Packages
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:lottie/lottie.dart';
+
+// Imports
+import 'package:face_recognition/recognize_face/presentation/manager/blocs/camera/camera_bloc.dart';
+import 'package:face_recognition/recognize_face/presentation/widgets/widgets.dart';
 
 class PhotoPreviewScreen extends StatelessWidget {
   // Constructor
@@ -10,73 +16,27 @@ class PhotoPreviewScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: Center(
-      child: Container(
-        margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 100),
-        child: ClipRRect(
-          borderRadius: const BorderRadius.all(Radius.circular(25)),
+      body: Center(
+        child: Container(
+          margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 100),
           child: BlocBuilder<CameraBloc, CameraState>(
             builder: (context, state) {
               switch (state.status) {
                 // Situation: The camera has a image path ready to display
                 case Status.loaded:
-                  return Image.file(
-                    File(state.imagePath),
-                    fit: BoxFit.cover,
-                    width: double.infinity,
-                    height: double.infinity,
-                  );
+                  return const ValidatePictureView();
                 // Situation: The camera has failed to save the image
                 case Status.failure:
                   return const FailureMessage();
+                case Status.takingPhoto:
+                  return Lottie.network(
+                      'https://assets6.lottiefiles.com/packages/lf20_iwcaeitq.json');
                 // Situation: The camera has an unknown status
                 default:
                   return const CircularProgressIndicator();
               }
             },
           ),
-        ),
-      ),
-    ));
-  }
-}
-
-class FailureMessage extends StatelessWidget {
-  const FailureMessage({
-    super.key,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      color: Colors.red,
-      child: Center(
-        child: Column(
-          children: [
-            const Text(
-              'Failed to load image',
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 24,
-              ),
-            ),
-            ElevatedButton(
-              onPressed: () {
-                Navigator.of(context).push(
-                  MaterialPageRoute(
-                    builder: (context) => const PhotoPreviewScreen(),
-                  ),
-                );
-              },
-              child: const Text(
-                'Retry',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 24,
-                ),
-              ),
-            ),
-          ],
         ),
       ),
     );

@@ -1,5 +1,10 @@
+// Flutter
 import 'package:flutter/material.dart';
+
+// Package
 import 'package:flutter_bloc/flutter_bloc.dart';
+
+// Imports
 import 'package:face_recognition/recognize_face/presentation/manager/blocs/camera/camera_bloc.dart';
 import 'package:face_recognition/recognize_face/presentation/views/views.dart';
 
@@ -18,7 +23,7 @@ class PhotoButton extends StatelessWidget {
       onPressed: () async {
         // Action: Take a picture
         cameraBloc.add(TakePicture());
-        
+
         // Action: Navigate to the preview screen
         await Navigator.of(context).push(
           MaterialPageRoute(
