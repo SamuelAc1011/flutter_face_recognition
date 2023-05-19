@@ -26,8 +26,7 @@ class FailureMessage extends StatelessWidget {
           ),
           ClipRRect(
             borderRadius: const BorderRadius.all(Radius.circular(25)),
-            child: Lottie.network(
-                'https://assets6.lottiefiles.com/packages/lf20_Sb1gLg.json'),
+            child: Lottie.asset('assets/lotties/face_scan.json'),
           ),
           OutlinedButton(
             onPressed: () {

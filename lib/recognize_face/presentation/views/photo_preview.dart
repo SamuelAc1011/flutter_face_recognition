@@ -29,8 +29,7 @@ class PhotoPreviewScreen extends StatelessWidget {
                 case Status.failure:
                   return const FailureMessage();
                 case Status.takingPhoto:
-                  return Lottie.network(
-                      'https://assets6.lottiefiles.com/packages/lf20_iwcaeitq.json');
+                  return Lottie.asset('assets/lotties/user_search.json');
                 // Situation: The camera has an unknown status
                 default:
                   return const CircularProgressIndicator();
