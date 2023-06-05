@@ -20,8 +20,8 @@ class HomeScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(title: const Text('Take a Picture')),
-      body: BlocBuilder<CameraBloc, CameraState>(
-        builder: (context, state) {
+      body: BlocBuilder<CameraBloc, CameraState>(builder: (context, state) {
+        if (state.status == Status.loaded) {
           return FutureBuilder<void>(
             future: cameraBloc.initializeControllerFuture,
             builder: (context, snapshot) {
@@ -35,8 +35,10 @@ class HomeScreen extends StatelessWidget {
               }
             },
           );
-        },
-      ),
+        }
+
+        return const Center(child: CircularProgressIndicator());
+      }),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       floatingActionButton: const PhotoButton(),
     );

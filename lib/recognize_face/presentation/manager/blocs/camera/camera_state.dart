@@ -3,7 +3,7 @@ part of 'camera_bloc.dart';
 enum Status { initial, loaded, takingPhoto, failure }
 
 class CameraState extends Equatable {
-  // // Constructor
+  // Constructor
   const CameraState({
     this.status = Status.initial,
     this.imagePath = '',

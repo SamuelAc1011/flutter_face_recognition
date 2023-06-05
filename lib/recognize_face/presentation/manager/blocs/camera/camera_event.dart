@@ -8,3 +8,8 @@ class TakePicture extends CameraEvent {
   @override
   List<Object> get props => [];
 }
+
+class InitCameraView extends CameraEvent {
+  @override
+  List<Object> get props => [];
+}

@@ -42,6 +42,11 @@ class CameraBloc extends Bloc<CameraEvent, CameraState> {
         emit(state.copyWith(status: Status.failure));
       }
     });
+
+    // Event: Initialize Camera View
+    on<InitCameraView>((event, emit) async {
+      emit(state.copyWith(status: Status.loaded));
+    });
   }
 
   // Method: Initialize Camera Controller
@@ -57,5 +62,6 @@ class CameraBloc extends Bloc<CameraEvent, CameraState> {
       enableAudio: false,
     );
     initializeControllerFuture = controller!.initialize();
+    add(InitCameraView());
   }
 }

@@ -1,5 +1,7 @@
 // Flutter
+import 'package:face_recognition/recognize_face/presentation/manager/blocs/camera/camera_bloc.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 // Package
 import 'package:lottie/lottie.dart';
@@ -17,7 +19,7 @@ class FailureMessage extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
           const Text(
-            'Por favor, trata de que tu rosotro se encuentre en el centro de la pantalla.',
+            'Por favor, trata de que tu rostro se encuentre en el centro de la pantalla.',
             style: TextStyle(
               color: Colors.black,
               fontSize: 24,
@@ -30,6 +32,8 @@ class FailureMessage extends StatelessWidget {
           ),
           OutlinedButton(
             onPressed: () {
+              final cameraBloc = context.read<CameraBloc>();
+              cameraBloc.add(InitCameraView());
               Navigator.of(context).pushNamedAndRemoveUntil(
                 'main_screen',
                 (route) => false,
